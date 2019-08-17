@@ -14,4 +14,9 @@ public class JobDemoTest extends ApplicationTest {
         jobDemo.insertCustomer();
     }
 
+    @Test
+    public void insertCustomerByThread() throws Exception {
+        jobDemo.insertCustomerByThread();
+    }
+
 }
