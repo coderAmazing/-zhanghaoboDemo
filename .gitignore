@@ -1,0 +1,16 @@
+.idea
+**/target/
+*.class
+target/
+*.log
+unCompressFile
+*.bak
+*.iml
+*.js.map
+*.gz
+*.tgz
+*.log.*
+*.zip
+.project
+*.ipr
+*.iws

@@ -1,0 +1,20 @@
+server:
+  context-path: /app-api
+  port: 48085
+  address: 0.0.0.0
+
+spring:
+  application:
+    name: app-api
+  data.elasticsearch:
+#    cluster-name: istic_bigdata  #节点名字，默认elasticsearch
+    cluster-name: my-es
+    #node-ip: 127.0.0.1
+    node-ip: 192.168.44.130
+    node-port: 9300
+    repositories.enable: true
+
+es.index.customer: customer_index
+es.type.customer: customer
+
+
