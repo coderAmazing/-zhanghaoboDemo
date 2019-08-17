@@ -1,9 +1,8 @@
-package com.zhb.bean;
+package com.zhb.bean.customers;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class TCustomers implements Serializable{
+public class TCustomers {
     private Integer id;
 
     private String name;

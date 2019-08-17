@@ -1,6 +1,7 @@
 package com.zhb.task;
 
-import com.zhb.bean.TCustomers;
+
+import com.zhb.bean.customers.TCustomers;
 import com.zhb.service.CustomerCareService;
 import com.zhb.service.MqService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,12 @@ public class JobDemo {
     @Autowired
     private MqService mqService;
 
+
     public void insertCustomer(){
         List<TCustomers> list = mqService.getList();
         System.out.println(list.size());
         customerCareService.addCustomerToEs(list);
+        customerCareService.addCustomerToMysql(list);
         System.out.println(list.size()+"!!!!success");
     }
 }

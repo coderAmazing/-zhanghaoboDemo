@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhb.dao.mysql.TCustomersMapper" >
+  <resultMap id="BaseResultMap" type="com.zhb.bean.customers.TCustomers" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="wechat" property="wechat" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="CHAR" />
+    <result column="expend_perday" property="expendPerday" jdbcType="INTEGER" />
+    <result column="fedding_pattern" property="feddingPattern" jdbcType="VARCHAR" />
+    <result column="is_trial" property="isTrial" jdbcType="CHAR" />
+    <result column="purchase_intention" property="purchaseIntention" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="guide_id" property="guideId" jdbcType="VARCHAR" />
+    <result column="buy_intention" property="buyIntention" jdbcType="VARCHAR" />
+    <result column="is_communication" property="isCommunication" jdbcType="CHAR" />
+    <result column="update_by" property="updateBy" jdbcType="INTEGER" />
+    <result column="ds" property="ds" jdbcType="CHAR" />
+    <result column="is_status" property="isStatus" jdbcType="CHAR" />
+    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="data_from" property="dataFrom" jdbcType="CHAR" />
+    <result column="crm_id" property="crmId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, wechat, birthday, mobile, sex, expend_perday, fedding_pattern, is_trial, 
+    purchase_intention, remark, guide_id, buy_intention, is_communication, update_by, 
+    ds, is_status, creat_time, update_time, data_from, crm_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zhb.bean.customers.TCustomersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_potential_customers
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_potential_customers
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_potential_customers
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zhb.bean.customers.TCustomersExample" >
+    delete from t_potential_customers
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zhb.bean.customers.TCustomers" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_potential_customers (name, wechat, birthday, 
+      mobile, sex, expend_perday, 
+      fedding_pattern, is_trial, purchase_intention, 
+      remark, guide_id, buy_intention, 
+      is_communication, update_by, ds, 
+      is_status, creat_time, update_time, 
+      data_from, crm_id)
+    values (#{name,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, 
+      #{mobile,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{expendPerday,jdbcType=INTEGER}, 
+      #{feddingPattern,jdbcType=VARCHAR}, #{isTrial,jdbcType=CHAR}, #{purchaseIntention,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{guideId,jdbcType=VARCHAR}, #{buyIntention,jdbcType=VARCHAR}, 
+      #{isCommunication,jdbcType=CHAR}, #{updateBy,jdbcType=INTEGER}, #{ds,jdbcType=CHAR}, 
+      #{isStatus,jdbcType=CHAR}, #{creatTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{dataFrom,jdbcType=CHAR}, #{crmId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhb.bean.customers.TCustomers" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_potential_customers
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="wechat != null" >
+        wechat,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="expendPerday != null" >
+        expend_perday,
+      </if>
+      <if test="feddingPattern != null" >
+        fedding_pattern,
+      </if>
+      <if test="isTrial != null" >
+        is_trial,
+      </if>
+      <if test="purchaseIntention != null" >
+        purchase_intention,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="guideId != null" >
+        guide_id,
+      </if>
+      <if test="buyIntention != null" >
+        buy_intention,
+      </if>
+      <if test="isCommunication != null" >
+        is_communication,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="ds != null" >
+        ds,
+      </if>
+      <if test="isStatus != null" >
+        is_status,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="dataFrom != null" >
+        data_from,
+      </if>
+      <if test="crmId != null" >
+        crm_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null" >
+        #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="expendPerday != null" >
+        #{expendPerday,jdbcType=INTEGER},
+      </if>
+      <if test="feddingPattern != null" >
+        #{feddingPattern,jdbcType=VARCHAR},
+      </if>
+      <if test="isTrial != null" >
+        #{isTrial,jdbcType=CHAR},
+      </if>
+      <if test="purchaseIntention != null" >
+        #{purchaseIntention,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="guideId != null" >
+        #{guideId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyIntention != null" >
+        #{buyIntention,jdbcType=VARCHAR},
+      </if>
+      <if test="isCommunication != null" >
+        #{isCommunication,jdbcType=CHAR},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=INTEGER},
+      </if>
+      <if test="ds != null" >
+        #{ds,jdbcType=CHAR},
+      </if>
+      <if test="isStatus != null" >
+        #{isStatus,jdbcType=CHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataFrom != null" >
+        #{dataFrom,jdbcType=CHAR},
+      </if>
+      <if test="crmId != null" >
+        #{crmId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zhb.bean.customers.TCustomersExample" resultType="java.lang.Integer" >
+    select count(*) from t_potential_customers
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_potential_customers
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wechat != null" >
+        wechat = #{record.wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=CHAR},
+      </if>
+      <if test="record.expendPerday != null" >
+        expend_perday = #{record.expendPerday,jdbcType=INTEGER},
+      </if>
+      <if test="record.feddingPattern != null" >
+        fedding_pattern = #{record.feddingPattern,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isTrial != null" >
+        is_trial = #{record.isTrial,jdbcType=CHAR},
+      </if>
+      <if test="record.purchaseIntention != null" >
+        purchase_intention = #{record.purchaseIntention,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guideId != null" >
+        guide_id = #{record.guideId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buyIntention != null" >
+        buy_intention = #{record.buyIntention,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCommunication != null" >
+        is_communication = #{record.isCommunication,jdbcType=CHAR},
+      </if>
+      <if test="record.updateBy != null" >
+        update_by = #{record.updateBy,jdbcType=INTEGER},
+      </if>
+      <if test="record.ds != null" >
+        ds = #{record.ds,jdbcType=CHAR},
+      </if>
+      <if test="record.isStatus != null" >
+        is_status = #{record.isStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.creatTime != null" >
+        creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dataFrom != null" >
+        data_from = #{record.dataFrom,jdbcType=CHAR},
+      </if>
+      <if test="record.crmId != null" >
+        crm_id = #{record.crmId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_potential_customers
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      wechat = #{record.wechat,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=TIMESTAMP},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=CHAR},
+      expend_perday = #{record.expendPerday,jdbcType=INTEGER},
+      fedding_pattern = #{record.feddingPattern,jdbcType=VARCHAR},
+      is_trial = #{record.isTrial,jdbcType=CHAR},
+      purchase_intention = #{record.purchaseIntention,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      guide_id = #{record.guideId,jdbcType=VARCHAR},
+      buy_intention = #{record.buyIntention,jdbcType=VARCHAR},
+      is_communication = #{record.isCommunication,jdbcType=CHAR},
+      update_by = #{record.updateBy,jdbcType=INTEGER},
+      ds = #{record.ds,jdbcType=CHAR},
+      is_status = #{record.isStatus,jdbcType=CHAR},
+      creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      data_from = #{record.dataFrom,jdbcType=CHAR},
+      crm_id = #{record.crmId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhb.bean.customers.TCustomers" >
+    update t_potential_customers
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null" >
+        wechat = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="expendPerday != null" >
+        expend_perday = #{expendPerday,jdbcType=INTEGER},
+      </if>
+      <if test="feddingPattern != null" >
+        fedding_pattern = #{feddingPattern,jdbcType=VARCHAR},
+      </if>
+      <if test="isTrial != null" >
+        is_trial = #{isTrial,jdbcType=CHAR},
+      </if>
+      <if test="purchaseIntention != null" >
+        purchase_intention = #{purchaseIntention,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="guideId != null" >
+        guide_id = #{guideId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyIntention != null" >
+        buy_intention = #{buyIntention,jdbcType=VARCHAR},
+      </if>
+      <if test="isCommunication != null" >
+        is_communication = #{isCommunication,jdbcType=CHAR},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=INTEGER},
+      </if>
+      <if test="ds != null" >
+        ds = #{ds,jdbcType=CHAR},
+      </if>
+      <if test="isStatus != null" >
+        is_status = #{isStatus,jdbcType=CHAR},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataFrom != null" >
+        data_from = #{dataFrom,jdbcType=CHAR},
+      </if>
+      <if test="crmId != null" >
+        crm_id = #{crmId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhb.bean.customers.TCustomers" >
+    update t_potential_customers
+    set name = #{name,jdbcType=VARCHAR},
+      wechat = #{wechat,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=CHAR},
+      expend_perday = #{expendPerday,jdbcType=INTEGER},
+      fedding_pattern = #{feddingPattern,jdbcType=VARCHAR},
+      is_trial = #{isTrial,jdbcType=CHAR},
+      purchase_intention = #{purchaseIntention,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      guide_id = #{guideId,jdbcType=VARCHAR},
+      buy_intention = #{buyIntention,jdbcType=VARCHAR},
+      is_communication = #{isCommunication,jdbcType=CHAR},
+      update_by = #{updateBy,jdbcType=INTEGER},
+      ds = #{ds,jdbcType=CHAR},
+      is_status = #{isStatus,jdbcType=CHAR},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      data_from = #{dataFrom,jdbcType=CHAR},
+      crm_id = #{crmId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

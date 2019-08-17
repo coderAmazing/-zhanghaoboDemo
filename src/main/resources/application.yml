@@ -18,3 +18,16 @@ es.index.customer: customer_index
 es.type.customer: customer
 
 
+mybatis.mapper-locations: classpath*:com/zhb/dao/mysql/*.xml
+spring.datasource.name: wxapp
+spring.datasource.url: jdbc:mysql://localhost:3306/wxapp?characterEncoding=utf-8
+spring.datasource.username: root
+spring.datasource.password: 123456
+spring.datasource.driver-class-name: com.mysql.jdbc.Driver
+
+spring.datasource.max-wait: 10000
+spring.datasource.max-active: 50
+spring.datasource.max-idle: 10
+spring.datasource.min-idle: 8
+spring.datasource.test-on-borrow: true
+spring.datasource.validation-query: select 1
