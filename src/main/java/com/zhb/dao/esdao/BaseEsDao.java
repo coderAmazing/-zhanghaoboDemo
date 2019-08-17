@@ -63,8 +63,6 @@ public class BaseEsDao {
         return esTemplate.typeExists(index, type);
     }
 
-    public void printSql(SearchRequestBuilder srb) {
-        logger.info(DateUtil.getTimeStr("yyyy-MM-dd'T'HH:mm:ss", new Date()) + " 构建的查询：" + srb.toString());
-    }
+
 
 }

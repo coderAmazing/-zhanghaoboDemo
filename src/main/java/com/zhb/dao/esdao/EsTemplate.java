@@ -1,6 +1,7 @@
 package com.zhb.dao.esdao;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zhb.util.DateUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
 import org.elasticsearch.action.admin.indices.exists.types.TypesExistsRequest;
@@ -37,6 +38,7 @@ import javax.annotation.PreDestroy;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -130,6 +132,7 @@ public class EsTemplate {
         if (null != queryBuilder) {
             s.setQuery(queryBuilder);
         }
+        printSql(s);
         SearchResponse response = s.execute().actionGet();
         return responseToList(response);
     }
@@ -151,6 +154,7 @@ public class EsTemplate {
         if (null != queryBuilder) {
             s.setQuery(queryBuilder);
         }
+        printSql(s);
         SearchResponse response = s.execute().actionGet();
         return responseToList(response);
     }
@@ -222,5 +226,9 @@ public class EsTemplate {
         if (interval / (24 * 60 * 60 * 1000) >= 1 && interval / (24 * 60 * 60 * 1000) < 7) {
             return DateHistogramInterval.DAY;
         } else return DateHistogramInterval.HOUR;
+    }
+
+    public void printSql(SearchRequestBuilder srb) {
+        logger.info(DateUtil.getTimeStr("yyyy-MM-dd'T'HH:mm:ss", new Date()) + " 构建的查询：" + srb.toString());
     }
 }

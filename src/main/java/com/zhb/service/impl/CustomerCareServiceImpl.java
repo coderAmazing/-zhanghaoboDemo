@@ -1,9 +1,12 @@
 package com.zhb.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhb.bean.customers.TCustomers;
 import com.zhb.dao.mysql.TCustomersMapper;
 import com.zhb.dao.esdao.BaseEsDao;
 import com.zhb.service.CustomerCareService;
+import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.index.query.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -39,4 +42,19 @@ public class CustomerCareServiceImpl implements CustomerCareService {
             mapper.insert(list.get(i));
         }
     }
+
+    @Override
+    public List<JSONObject> queryCustomer(String param, String phone) {
+        BoolQueryBuilder query = QueryBuilders.boolQuery();
+        MatchQueryBuilder q = null;
+        if(StringUtils.isNotEmpty(param)) {
+            q= QueryBuilders.matchQuery("purchaseIntention", param);
+        }else {
+            q = QueryBuilders.matchQuery("mobile", phone);
+        }
+        query.must(q);
+        return baseEsDao.find(index,esType,query);
+    }
+
+
 }
